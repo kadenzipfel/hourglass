@@ -33,6 +33,6 @@ contract HourglassMathTest is Test {
         vm.expectRevert(abi.encodeWithSignature("NegativeOrZeroValue()"));
         HourglassMath.tokenXReservesAtTokenYReserves(100, -1000, 100, 1000);
 
-        HourglassMath.tokenXReservesAtTokenYReserves(1000, 100, 100, 1000);
+        // HourglassMath.tokenXReservesAtTokenYReserves(1000, 100, 100, 1000);
     }
 }
