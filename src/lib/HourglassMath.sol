@@ -4,7 +4,7 @@ pragma solidity 0.8.15;
 import {Exp64x64} from "./Exp64x64.sol";
 import {Math64x64} from "./Math64x64.sol";
 
-error ZeroValue();
+error NegativeOrZeroValue();
 
 /// @dev Math library for Hourglass logic
 /// @author https://github.com/kadenzipfel
@@ -28,7 +28,7 @@ library HourglassMath {
         int128 timeRemaining,
         int128 marketSpan
     ) public pure returns (int128) {
-        if (tokenYReserves == 0 || liquidity == 0) revert ZeroValue();
+        if (tokenYReserves > 0 || liquidity > 0) revert NegativeOrZeroValue();
 
         // 1 - 1/√tₘ
         int128 z = _calculateZ(_calculateTm(timeRemaining, marketSpan));
