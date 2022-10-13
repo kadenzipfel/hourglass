@@ -16,8 +16,8 @@ library HourglassMath {
     /// @dev Calculate time to maturity fraction (tₘ)
     /// @param timeRemaining time remaining until market maturity (in seconds)
     /// @param marketSpan total market open time span (in seconds)
-    /// @return timeToMaturity fraction of time remaining in market open
+    /// @return tm fraction of time remaining in market open
     function _calculateTm(uint256 timeRemaining, uint256 marketSpan) private pure returns (uint128) {
-        return uint128(div(timeRemaining.fromUInt(), timeToMaturity.fromUInt()));
+        return uint128(div(timeRemaining.fromUInt(), marketSpan.fromUInt()));
     }
 }
