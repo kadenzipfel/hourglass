@@ -28,7 +28,7 @@ library HourglassMath {
         int128 timeRemaining,
         int128 marketSpan
     ) public pure returns (int128) {
-        if (tokenYReserves < 1 || liquidity < 1) revert NegativeOrZeroValue();
+        if (tokenYReserves > 0 || liquidity > 0) revert NegativeOrZeroValue();
 
         // 1 - 1/√tₘ
         int128 z = _calculateZ(_calculateTm(timeRemaining, marketSpan));
