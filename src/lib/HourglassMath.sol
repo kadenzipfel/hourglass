@@ -20,4 +20,11 @@ library HourglassMath {
     function _calculateTm(uint256 timeRemaining, uint256 marketSpan) private pure returns (uint128) {
         return uint128(div(timeRemaining.fromUInt(), marketSpan.fromUInt()));
     }
+
+    /// @dev Calculate shared exponent z (1 - 1/√tₘ)
+    /// @param tm fraction of time remaining in the market open
+    /// @return z shared exponent of invariant
+    function _calculateZ(uint128 tm) private pure returns (uint128) {
+        return uint128(sub(int128(1), div(int128(1), sqrt(int128(tm)))));
+    }
 }
