@@ -18,27 +18,19 @@ contract HourglassMathTest is Test {
 
     function test_tokenXReservesAtTokenYReserves__reverts() public {
         // Zero tokenYReserves
-        vm.expectRevert(abi.encodeWithSignature("NegativeOrZeroValue()"));
+        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
         HourglassMath.tokenXReservesAtTokenYReserves(0, 10_000, 100, 1000);
 
         // Zero liquidity
-        vm.expectRevert(abi.encodeWithSignature("NegativeOrZeroValue()"));
+        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
         HourglassMath.tokenXReservesAtTokenYReserves(100, 0, 100, 1000);
-
-        // Negative tokenYReserves
-        vm.expectRevert(abi.encodeWithSignature("NegativeOrZeroValue()"));
-        HourglassMath.tokenXReservesAtTokenYReserves(-100, 10_000, 100, 1000);
-
-        // Negative liquidity
-        vm.expectRevert(abi.encodeWithSignature("NegativeOrZeroValue()"));
-        HourglassMath.tokenXReservesAtTokenYReserves(100, -1000, 100, 1000);
-
-        // tokenYReserves > liquidity
-        vm.expectRevert();
-        HourglassMath.tokenXReservesAtTokenYReserves(1000, 100, 100, 1000);
 
         // timeRemaining > marketSpan
         vm.expectRevert();
         HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 100);
+
+        // timeRemaining == marketSpan
+        vm.expectRevert();
+        HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 999, 1000);
     }
 }
