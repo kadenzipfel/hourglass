@@ -33,4 +33,17 @@ contract HourglassMathTest is Test {
         vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
         HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 1000);
     }
+
+    // Make _calculateTm visibility public/external to run below test
+
+    // function test_calculateTm() public {
+    //     uint128 tm0 = HourglassMath._calculateTm(999, 1000);
+    //     assertEq(tm0, 18428297329635842064);
+
+    //     uint128 tm1 = HourglassMath._calculateTm(500, 1000);
+    //     assertEq(tm1, 9223372036854775808);
+
+    //     uint128 tm2 = HourglassMath._calculateTm(1, 1000);
+    //     assertEq(tm2, 18446744073709551);
+    // }
 }
