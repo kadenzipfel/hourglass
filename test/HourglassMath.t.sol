@@ -31,6 +31,6 @@ contract HourglassMathTest is Test {
 
         // timeRemaining == marketSpan
         vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 999, 1000);
+        HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 1000);
     }
 }
