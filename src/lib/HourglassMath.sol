@@ -19,36 +19,36 @@ library HourglassMath {
 
     uint128 public constant ONE = 0x10000000000000000; //   In 64.64
 
-    // /// @notice Calculates token X reserves given token Y reserves
-    // /// @param tokenYReserves reserves of token Y
-    // /// @param liquidity amount of liquidity in pool
-    // /// @param timeRemaining time remaining until market maturity (in seconds)
-    // /// @param marketSpan total market open time span (in seconds)
-    // /// @return tokenXReserves reserves for token X
-    // function tokenXReservesAtTokenYReserves(
-    //     uint128 tokenYReserves,
-    //     uint128 liquidity,
-    //     int128 timeRemaining,
-    //     int128 marketSpan
-    // ) public pure returns (uint128) {
-    //     if (tokenYReserves == 0 || liquidity == 0) revert ZeroValue();
-    //     if (timeRemaining >= marketSpan) revert InvalidTime();
+    /// @notice Calculates token X reserves given token Y reserves
+    /// @param tokenYReserves reserves of token Y
+    /// @param liquidity amount of liquidity in pool
+    /// @param timeRemaining time remaining until market maturity (in seconds)
+    /// @param marketSpan total market open time span (in seconds)
+    /// @return tokenXReserves reserves for token X
+    function tokenXReservesAtTokenYReserves(
+        uint128 tokenYReserves,
+        uint128 liquidity,
+        int128 timeRemaining,
+        int128 marketSpan
+    ) public pure returns (uint128) {
+        if (tokenYReserves == 0 || liquidity == 0) revert ZeroValue();
+        if (timeRemaining >= marketSpan) revert InvalidTime();
 
-    //     // 1 - 1/√tₘ
-    //     uint128 z = _calculateZ(_calculateTm(timeRemaining, marketSpan));
+        // 1 - 1/√tₘ
+        int128 z = _calculateZ(_calculateTm(timeRemaining, marketSpan));
 
-    //     // 2L^(1 - 1/√tₘ)
-    //     uint256 l = (int128(2*ONE)).mulu(uint256(liquidity.pow(z, ONE)));
+        // 2L^(1 - 1/√tₘ)
+        uint256 l = (int128(2*ONE)).mulu(uint256(liquidity).divu(uint256(ONE)).pow(z));
 
-    //     // y^(1 - 1/√tₘ)
-    //     uint256 y = tokenYReserves.pow(z, ONE);
+        // y^(1 - 1/√tₘ)
+        uint256 y = tokenYReserves.pow(z, ONE);
 
-    //     // 2L^(1 - 1/√tₘ)-y^(1 - 1/√tₘ)
-    //     uint256 ly = l - y;
+        // 2L^(1 - 1/√tₘ)-y^(1 - 1/√tₘ)
+        uint256 ly = l - y;
 
-    //     // (1 - 1/√tₘ)√(2L^(1 - 1/√tₘ)-y^(1 - 1/√tₘ))
-    //     return uint128(ly).pow(uint128(int128(ONE).div(int128(z))), ONE);
-    // }
+        // (1 - 1/√tₘ)√(2L^(1 - 1/√tₘ)-y^(1 - 1/√tₘ))
+        return uint128(ly).pow(uint128(int128(ONE).div(int128(z))), ONE);
+    }
 
     /// @dev Calculate time to maturity fraction (tₘ)
     /// @param timeRemaining time remaining until market maturity (in seconds)

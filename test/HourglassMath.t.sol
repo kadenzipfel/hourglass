@@ -16,23 +16,23 @@ contract HourglassMathTest is Test {
     using Exp64x64 for uint128;
     using Exp64x64 for int128;
 
-    // function test_tokenXReservesAtTokenYReserves__reverts() public {
-    //     // Zero tokenYReserves
-    //     vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
-    //     HourglassMath.tokenXReservesAtTokenYReserves(0, 10_000, 100, 1000);
+    function test_tokenXReservesAtTokenYReserves__reverts() public {
+        // Zero tokenYReserves
+        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
+        HourglassMath.tokenXReservesAtTokenYReserves(0, 10_000, 100, 1000);
 
-    //     // Zero liquidity
-    //     vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
-    //     HourglassMath.tokenXReservesAtTokenYReserves(100, 0, 100, 1000);
+        // Zero liquidity
+        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
+        HourglassMath.tokenXReservesAtTokenYReserves(100, 0, 100, 1000);
 
-    //     // timeRemaining > marketSpan
-    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-    //     HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 100);
+        // timeRemaining > marketSpan
+        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+        HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 100);
 
-    //     // timeRemaining == marketSpan
-    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-    //     HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 1000);
-    // }
+        // timeRemaining == marketSpan
+        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+        HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 1000);
+    }
 
     // Make _calculateTm visibility public/external to run below test
 
