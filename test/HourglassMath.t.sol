@@ -35,20 +35,40 @@ contract HourglassMathTest is Test {
     }
 
     function test_tokenXReservesAtTokenYReserves__baseCases() public {
-        uint128[1] memory tokenYReservesAmounts = [
-            uint128(100_000 * 1e18)
+        uint128[5] memory tokenYReservesAmounts = [
+            uint128(100_000 * 1e18),
+            uint128(8032 * 1e18),
+            uint128(65_032 * 1e18),
+            uint128(95_322 * 1e18),
+            uint128(5373 * 1e18)
         ];
-        uint128[1] memory liquidityAmounts = [
-            uint128(100_000 * 1e18)
+        uint128[5] memory liquidityAmounts = [
+            uint128(100_000 * 1e18),
+            uint128(86_530 * 1e18),
+            uint128(39_530 * 1e18),
+            uint128(140_330 * 1e18),
+            uint128(1340 * 1e18)
         ];
-        int128[1] memory timeRemainingAmounts = [
-            int128(999)
+        int128[5] memory timeRemainingAmounts = [
+            int128(999),
+            int128(750),
+            int128(500),
+            int128(250),
+            int128(50)
         ];
-        int128[1] memory marketSpanAmounts = [
+        int128[5] memory marketSpanAmounts = [
+            int128(1000),
+            int128(1000),
+            int128(1000),
+            int128(1000),
             int128(1000)
         ];
-        uint128[1] memory expectedTokenXReserves = [
-            uint128(100_000)
+        uint128[5] memory expectedTokenXReserves = [
+            uint128(100_000),
+            uint128(3_866_584),
+            uint128(26_168),
+            uint128(265_861),
+            uint128(1098)
         ];
 
         for (uint256 i; i < timeRemainingAmounts.length; i++) {
