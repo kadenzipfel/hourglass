@@ -50,6 +50,33 @@ library HourglassMath {
         return uint128(ly.pow(int128(ONE).div(int128(z))));
     }
 
+    /// @notice Calculates amount of tokens returned given amount of collateral deposited
+    /// @param collateralIn amount of collateral being deposited
+    /// @param tokenYReserves reserves of token Y
+    /// @param liquidity amount of liquidity in pool
+    /// @param timeRemaining time remaining until market maturity (in seconds)
+    /// @param marketSpan total market open time span (in seconds)
+    /// @return tokensOut tokens out
+    function tokensOutForCollateralIn(
+        uint256 collateralIn,
+        uint256 tokenXReserves,
+        uint256 tokenYReserves,
+        uint256 liquidity,
+        int128 timeRemaining,
+        int128 marketSpan
+    ) public pure returns (uint256) {
+        // Increase amounts by collateral in
+        tokenXReserves += collateralIn;
+        tokenYReserves += collateralIn;
+        liquidity += collateralIn;
+
+        // Calculate minimum token X reserves
+        uint256 minTokenXReserves = tokenXReservesAtTokenYReserves(tokenYReserves, liquidity, timeRemaining, marketSpan);
+        
+        // Return amount of extra token X
+        return tokenXReserves - minTokenXReserves;
+    }
+
     /// @dev Calculate time to maturity fraction (tₘ)
     /// @param timeRemaining time remaining until market maturity (in seconds)
     /// @param marketSpan total market open time span (in seconds)
