@@ -47,14 +47,16 @@ contract HourglassMathTest is Test {
     //     assertEq(tm2, 18446744073709551);
     // }
 
-    function test_calculateZ() public {
-        int128 z0 = HourglassMath._calculateZ(18428297329635842064);
-        assertEq(z0, -9230295335538516);
+    // Make _calculateZ visibility public/external to run below test
 
-        int128 z1 = HourglassMath._calculateZ(9223372036854775808);
-        assertEq(z1, -7640891576956012809);
+    // function test_calculateZ() public {
+    //     int128 z0 = HourglassMath._calculateZ(18428297329635842064);
+    //     assertEq(z0, -9230295335538516);
 
-        int128 z2 = HourglassMath._calculateZ(18446744073709551);
-        assertEq(z2, -564890522797642047355);
-    }
+    //     int128 z1 = HourglassMath._calculateZ(9223372036854775808);
+    //     assertEq(z1, -7640891576956012809);
+
+    //     int128 z2 = HourglassMath._calculateZ(18446744073709551);
+    //     assertEq(z2, -564890522797642047355);
+    // }
 }

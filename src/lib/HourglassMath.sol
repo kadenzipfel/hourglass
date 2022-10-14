@@ -61,7 +61,7 @@ library HourglassMath {
     /// @dev Calculate shared exponent z (1 - 1/√tₘ)
     /// @param tm fraction of time remaining in the market open
     /// @return z shared exponent of invariant in 64.64
-    function _calculateZ(uint128 tm) public pure returns (int128) {
+    function _calculateZ(uint128 tm) private pure returns (int128) {
         return int128(int128(ONE).sub(int128(ONE).div(int128(tm).sqrt())));
     }
 }
