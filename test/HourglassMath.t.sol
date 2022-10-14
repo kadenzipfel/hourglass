@@ -33,33 +33,4 @@ contract HourglassMathTest is Test {
         vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
         HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 1000);
     }
-
-    function test_tokenXReservesAtTokenYReserves__baseCases() public {
-        uint128[1] memory tokenYReservesAmounts = [
-            uint128(100 * 1e18)
-        ];
-        uint128[1] memory liquidityAmounts = [
-            uint128(100 * 1e18)
-        ];
-        int128[1] memory timeRemainingAmounts = [
-            int128(999)
-        ];
-        int128[1] memory marketSpanAmounts = [
-            int128(1000)
-        ];
-        uint128[1] memory expectedTokenXReserves = [
-            uint128(100 * 1e18)
-        ];
-
-        for (uint256 i; i < timeRemainingAmounts.length; i++) {
-            uint128 result = HourglassMath.tokenXReservesAtTokenYReserves(
-                tokenYReservesAmounts[i],
-                liquidityAmounts[i],
-                timeRemainingAmounts[i],
-                marketSpanAmounts[i]
-            );
-
-            assertApproxEqAbs(result, expectedTokenXReserves[i], 2);
-        }
-    }
 }
