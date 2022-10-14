@@ -38,7 +38,7 @@ library HourglassMath {
         int128 z = _calculateZ(_calculateTm(timeRemaining, marketSpan));
 
         // 2L^(1 - 1/√tₘ)
-        int128 l = int128(2*ONE).mul(liquidity.divu(uint256(ONE)).pow(z));
+        int128 l = int128(2 * ONE).mul(liquidity.divu(uint256(ONE)).pow(z));
 
         // y^(1 - 1/√tₘ)
         int128 y = tokenYReserves.divu(uint256(ONE)).pow(z);
