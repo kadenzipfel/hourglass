@@ -21,7 +21,7 @@ library HourglassMath {
 
     /// @notice Calculates token X reserves given token Y reserves
     /// @param tokenYReserves reserves of token Y
-    /// @param liquidity amount of liquidity in pool
+    /// @param liquidity amount of collateral liquidity in pool
     /// @param timeRemaining time remaining until market maturity (in seconds)
     /// @param marketSpan total market open time span (in seconds)
     /// @return tokenXReserves reserves for token X
@@ -48,6 +48,37 @@ library HourglassMath {
 
         // (1 - 1/√tₘ)√(2L^(1 - 1/√tₘ)-y^(1 - 1/√tₘ))
         return uint128(ly.pow(int128(ONE).div(int128(z))));
+    }
+
+    /// @notice Calculates amount of collateral liquidity given reserves of token x and y
+    /// @param tokenXReserves reserves of token X
+    /// @param tokenYReserves reserves of token Y
+    /// @param timeRemaining time remaining until market maturity (in seconds) 
+    /// @param tokenXReserves total market open time span (in seconds)
+    /// @return liquidity amount of collateral liquidity at given token reserves
+    function liquidityAtTokenReserves(
+        uint256 tokenXReserves,
+        uint256 tokenYReserves,
+        int128 timeRemaining,
+        int128 marketSpan
+    ) public pure returns (uint128) {
+        if (tokenXReserves == 0 || tokenYReserves == 0) revert ZeroValue();
+        if (timeRemaining >= marketSpan) revert InvalidTime();
+
+        // 1 - 1/√tₘ
+        int128 z = _calculateZ(_calculateTm(timeRemaining, marketSpan));
+
+        // x^(1 - 1/√tₘ)
+        int128 x = tokenXReserves.divu(uint256(ONE)).pow(z);
+
+        // y^(1 - 1/√tₘ)
+        int128 y = tokenYReserves.divu(uint256(ONE)).pow(z);
+
+        // x^(1 - 1/√tₘ) + y^(1 - 1/√tₘ)
+        int128 xy = x.add(y);
+
+        // ((1 - 1/√tₘ)√(x^(1 - 1/√tₘ) + y^(1 - 1/√tₘ)))/2
+        return uint128(xy.pow(int128(ONE).div(int128(z))))/2;
     }
 
     /// @notice Calculates amount of tokens returned given amount of collateral deposited
