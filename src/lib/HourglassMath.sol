@@ -113,6 +113,7 @@ library HourglassMath {
 
     /// @notice Calculates amount of tokens required to receive given amount of collateral
     /// @param collateralOut amount of collateral to receive
+    /// @param tokenXReserves reserves of token X
     /// @param tokenYReserves reserves of token Y
     /// @param liquidity amount of liquidity in pool
     /// @param timeRemaining time remaining until market maturity (in seconds)
