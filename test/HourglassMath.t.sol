@@ -110,11 +110,11 @@ contract HourglassMathTest is Test {
     // ================================================================
 
     function test_liquidityAtTokenReserves__reverts() public {
-        // Zero tokenYReserves
+        // Zero tokenXReserves
         vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
         HourglassMath.liquidityAtTokenReserves(0, 10_000, 100, 1000);
 
-        // Zero liquidity
+        // Zero tokenYReserves
         vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
         HourglassMath.liquidityAtTokenReserves(100, 0, 100, 1000);
 
