@@ -42,6 +42,10 @@ contract HourglassMathTest is Test {
     //     assertEq(z2, -564890522797642047355);
     // }
 
+    // ================================================================
+    //                 tokenXReservesAtTokenYReserves
+    // ================================================================
+
     function test_tokenXReservesAtTokenYReserves__reverts() public {
         // Zero tokenYReserves
         vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
