@@ -126,4 +126,33 @@ contract HourglassMathTest is Test {
         vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
         HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 1000);
     }
+
+    function test_liquidityAtTokenReserves__baseCases() public {
+        uint128[5] memory tokenXReservesAmounts = [
+            uint128(100_000 * 1e18),
+            uint128(55_375 * 1e18),
+            uint128(3782 * 1e18),
+            uint128(153_031 * 1e18),
+            uint128(3_405_230 * 1e18)
+        ];
+        uint128[5] memory tokenYReservesAmounts = [
+            uint128(100_000 * 1e18),
+            uint128(37_652 * 1e18),
+            uint128(98_345 * 1e18),
+            uint128(240_239 * 1e18),
+            uint128(12_304_023 * 1e18)
+        ];
+        int128[5] memory timeRemainingAmounts = [int128(500), int128(900), int128(300), int128(100), int128(480)];
+        int128[5] memory marketSpanAmounts = [int128(1000), int128(1000), int128(1000), int128(1000), int128(1000)];
+        uint128[5] memory expectedLiquidity =
+            [uint128(100_000), uint128(45_615), uint128(8086), uint128(181_855), uint128(5_914_283)];
+
+        for (uint256 i; i < timeRemainingAmounts.length; i++) {
+            uint128 result = HourglassMath.liquidityAtTokenReserves(
+                tokenXReservesAmounts[i], tokenYReservesAmounts[i], timeRemainingAmounts[i], marketSpanAmounts[i]
+            ) / 1e18;
+
+            assertEq(result, expectedLiquidity[i]);
+        }
+    }
 }
