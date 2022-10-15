@@ -77,8 +77,11 @@ library HourglassMath {
         // x^(1 - 1/√tₘ) + y^(1 - 1/√tₘ)
         int128 xy = x.add(y);
 
-        // ((1 - 1/√tₘ)√(x^(1 - 1/√tₘ) + y^(1 - 1/√tₘ)))/2
-        return uint128(xy.pow(int128(ONE).div(int128(z))))/2;
+        // 2^(-1/(1-1/√tₘ))
+        int128 t = int128(2 * ONE).pow((-1 * int128(ONE)).div(int128(z)));
+
+        // 2^(-1/(1-1/√tₘ))((1 - 1/√tₘ)√(x^(1 - 1/√tₘ) + y^(1 - 1/√tₘ)))
+        return uint128(t.mul(xy.pow(int128(ONE).div(int128(z)))));
     }
 
     /// @notice Calculates amount of tokens returned given amount of collateral deposited
