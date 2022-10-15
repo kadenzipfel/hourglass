@@ -104,4 +104,26 @@ contract HourglassMathTest is Test {
 
         assertApproxEqAbs(tokenYReserves / 1e18, tokenYReservesMirror / 1e18, 1);
     }
+
+    // ================================================================
+    //                     liquidityAtTokenReserves
+    // ================================================================
+
+    function test_liquidityAtTokenReserves__reverts() public {
+        // Zero tokenYReserves
+        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
+        HourglassMath.liquidityAtTokenReserves(0, 10_000, 100, 1000);
+
+        // Zero liquidity
+        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
+        HourglassMath.liquidityAtTokenReserves(100, 0, 100, 1000);
+
+        // timeRemaining > marketSpan
+        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+        HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 100);
+
+        // timeRemaining == marketSpan
+        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+        HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 1000);
+    }
 }
