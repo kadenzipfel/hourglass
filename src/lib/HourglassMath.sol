@@ -107,7 +107,7 @@ library HourglassMath {
         // Calculate minimum token X reserves
         uint256 minTokenXReserves = tokenXReservesAtTokenYReserves(tokenYReserves, liquidity, timeRemaining, marketSpan);
         
-        // Return amount of extra token X
+        // Return token X delta
         return tokenXReserves - minTokenXReserves;
     }
 
@@ -135,8 +135,34 @@ library HourglassMath {
         // Calculate maximum token X reserves
         uint256 maxTokenXReserves = tokenXReservesAtTokenYReserves(tokenYReserves, liquidity, timeRemaining, marketSpan);
         
-        // Return amount of token X required
+        // Return token X delta
         return tokenXReserves - maxTokenXReserves;
+    }
+
+    /// @notice Calculates the amount of collateral required for given amount of token X out
+    /// @param tokenXOut amount of token
+    /// @param tokenXReserves reserves of token X
+    /// @param tokenYReserves reserves of token Y
+    /// @param liquidity amount of liquidity in pool
+    /// @param timeRemaining time remaining until market maturity (in seconds)
+    /// @param marketSpan total market open time span (in seconds)
+    /// @return collateralIn amount of collateral required for tokenXOut
+    function collateralInForTokensOut(
+        uint256 tokenXOut,
+        uint256 tokenXReserves,
+        uint256 tokenYReserves,
+        uint256 liquidity,
+        int128 timeRemaining,
+        int128 marketSpan
+    ) public pure returns (uint256) {
+        // Decrease token X reserves by tokenXOut
+        tokenXReserves -= tokenXOut;
+
+        // Calculate liquidity with reduced token X reserves
+        uint256 reducedLiquidity = liquidityAtTokenReserves(tokenXReserves, tokenYReserves, timeRemaining, marketSpan);
+
+        // Return liquidity delta
+        return liquidity - reducedLiquidity;
     }
 
     /// @dev Calculate time to maturity fraction (tₘ)
