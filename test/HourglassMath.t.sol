@@ -165,4 +165,30 @@ contract HourglassMathTest is Test {
 
         assertApproxEqAbs(tokenXReserves / 1e18, tokenXReservesMirror / 1e18, 1);
     }
+
+    // ================================================================
+    //                    tokensOutForCollateralIn
+    // ================================================================
+
+    function test_tokensOutForCollateralIn__reverts() public {
+        // Zero tokenXReserves
+        vm.expectRevert();        
+        HourglassMath.tokensOutForCollateralIn(10, 0, 100, 100, 500, 1000);
+
+        // Zero tokenYReserves
+        vm.expectRevert();        
+        HourglassMath.tokensOutForCollateralIn(10, 100, 0, 100, 500, 1000);
+
+        // Zero liquidity
+        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));        
+        HourglassMath.tokensOutForCollateralIn(10, 100, 100, 0, 500, 1000);
+
+        // timeRemaining > marketSpan
+        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+        HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 100);
+
+        // timeRemaining == marketSpan
+        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+        HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 1000);
+    }
 }

@@ -100,6 +100,8 @@ library HourglassMath {
         int128 timeRemaining,
         int128 marketSpan
     ) public pure returns (uint256) {
+        if (liquidity == 0) revert ZeroValue();
+
         // Increase amounts by collateral in
         tokenXReserves += collateralIn;
         tokenYReserves += collateralIn;
