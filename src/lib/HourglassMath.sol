@@ -91,7 +91,7 @@ library HourglassMath {
     /// @param liquidity amount of liquidity in pool
     /// @param timeRemaining time remaining until market maturity (in seconds)
     /// @param marketSpan total market open time span (in seconds)
-    /// @return tokensOut amount of tokens out for collateralIn
+    /// @return tokenXOut amount of tokens out for collateralIn
     function tokensOutForCollateralIn(
         uint256 collateralIn,
         uint256 tokenXReserves,
@@ -121,7 +121,7 @@ library HourglassMath {
     /// @param liquidity amount of liquidity in pool
     /// @param timeRemaining time remaining until market maturity (in seconds)
     /// @param marketSpan total market open time span (in seconds)
-    /// @return tokensIn amount of tokens required to receive collateralOut
+    /// @return tokenXIn amount of tokens required to receive collateralOut
     function tokensInForCollateralOut(
         uint256 collateralOut,
         uint256 tokenXReserves,
