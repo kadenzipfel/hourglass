@@ -276,61 +276,61 @@ contract HourglassMathTest is Test {
         HourglassMath.tokensInForCollateralOut(10, 100, 100, 100, 1000, 1000);
     }
 
-    // function test_tokensInForCollateralOut__baseCases() public {
-    //     uint256[5] memory collateralInAmounts = [
-    //         uint256(100_000 * 1e18),
-    //         uint256(81_400 * 1e18),
-    //         uint256(89_400 * 1e18),
-    //         uint256(63_000 * 1e18),
-    //         uint256(32_600 * 1e18)
-    //     ];
-    //     uint256[5] memory tokenXReservesAmounts = [
-    //         uint256(100_000 * 1e18),
-    //         uint256(63_000 * 1e18),
-    //         uint256(91_000 * 1e18),
-    //         uint256(31_000 * 1e18),
-    //         uint256(89_500 * 1e18)
-    //     ];
-    //     uint256[5] memory tokenYReservesAmounts = [
-    //         uint256(100_000 * 1e18),
-    //         uint256(100_721379115 * 1e12),
-    //         uint256(52_4342901833 * 1e11),
-    //         uint256(85_917982812 * 1e12),
-    //         uint256(74_7956167113 * 1e11)
-    //     ];
-    //     uint256[5] memory liquidityAmounts = [
-    //         uint256(100_000 * 1e18),
-    //         uint256(79_400 * 1e18),
-    //         uint256(68_000 * 1e18),
-    //         uint256(46_500 * 1e18),
-    //         uint256(80_700 * 1e18)
-    //     ];
-    //     int128[5] memory timeRemainingAmounts = [
-    //         int128(999),
-    //         int128(800),
-    //         int128(500),
-    //         int128(300),
-    //         int128(50)
-    //     ];
-    //     uint256[5] memory expectedTokensOut = [
-    //         uint256(149_987),
-    //         uint256(107_119),
-    //         uint256(141_665),
-    //         uint256(68_026),
-    //         uint256(51_983)
-    //     ];
+    function test_tokensInForCollateralOut__baseCases() public {
+        uint256[5] memory collateralOutAmounts = [
+            uint256(50_000 * 1e18),
+            uint256(34_032 * 1e18),
+            uint256(62_000 * 1e18),
+            uint256(23_000 * 1e18),
+            uint256(10_000 * 1e18)
+        ];
+        uint256[5] memory tokenXReservesAmounts = [
+            uint256(100_000 * 1e18),
+            uint256(59_600 * 1e18),
+            uint256(87_000 * 1e18),
+            uint256(69_600 * 1e18),
+            uint256(73_000 * 1e18)
+        ];
+        uint256[5] memory tokenYReservesAmounts = [
+            uint256(100_000 * 1e18),
+            uint256(79_0356867653 * 1e11),
+            uint256(98_2864736675 * 1e11),
+            uint256(91_0080760435 * 1e11),
+            uint256(69_2238627315 * 1e11)
+        ];
+        uint256[5] memory liquidityAmounts = [
+            uint256(100_000 * 1e18),
+            uint256(68_500 * 1e18),
+            uint256(92_400 * 1e18),
+            uint256(79_000 * 1e18),
+            uint256(71_000 * 1e18)
+        ];
+        int128[5] memory timeRemainingAmounts = [
+            int128(999),
+            int128(700),
+            int128(500),
+            int128(300),
+            int128(50)
+        ];
+        uint256[5] memory expectedTokensIn = [
+            uint256(150_048),
+            uint256(82_685),
+            uint256(408_372),
+            uint256(47_133),
+            uint256(66_838)
+        ];
 
-    //     for (uint256 i; i < timeRemainingAmounts.length; i++) {
-    //         uint256 result = HourglassMath.tokensInForCollateralOut(
-    //             collateralInAmounts[i],
-    //             tokenXReservesAmounts[i],
-    //             tokenYReservesAmounts[i],
-    //             liquidityAmounts[i],
-    //             timeRemainingAmounts[i],
-    //             1000
-    //         ) / 1e18;
+        for (uint256 i; i < timeRemainingAmounts.length; i++) {
+            uint256 result = HourglassMath.tokensInForCollateralOut(
+                collateralOutAmounts[i],
+                tokenXReservesAmounts[i],
+                tokenYReservesAmounts[i],
+                liquidityAmounts[i],
+                timeRemainingAmounts[i],
+                1000
+            ) / 1e18;
 
-    //         assertEq(result, expectedTokensOut[i]);
-    //     }
-    // }
+            assertEq(result, expectedTokensIn[i]);
+        }
+    }
 }
