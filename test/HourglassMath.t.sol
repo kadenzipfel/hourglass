@@ -193,20 +193,56 @@ contract HourglassMathTest is Test {
     }
 
     function test_tokensOutForCollateralIn__baseCases() public {
-        uint256[1] memory collateralInAmounts = [uint256(100_000 * 1e18)];
-        uint256[1] memory tokenXReservesAmounts = [uint256(100_000 * 1e18)];
-        uint256[1] memory tokenYReservesAmounts = [uint256(100_000 * 1e18)];
-        uint256[1] memory liquidityAmounts = [uint256(100_000 * 1e18)];
-        int128[1] memory timeRemainingAmounts = [int128(999)];
-        uint256[1] memory expectedTokensOut = [uint256(149987)];
+        uint256[5] memory collateralInAmounts = [
+            uint256(100_000 * 1e18),
+            uint256(81_400 * 1e18),
+            uint256(89_400 * 1e18),
+            uint256(63_000 * 1e18),
+            uint256(32_600 * 1e18)
+        ];
+        uint256[5] memory tokenXReservesAmounts = [
+            uint256(100_000 * 1e18),
+            uint256(63_000 * 1e18),
+            uint256(91_000 * 1e18),
+            uint256(31_000 * 1e18),
+            uint256(89_500 * 1e18)
+        ];
+        uint256[5] memory tokenYReservesAmounts = [
+            uint256(100_000 * 1e18),
+            uint256(100_721379115 * 1e12),
+            uint256(52_4342901833 * 1e11),
+            uint256(85_917982812 * 1e12),
+            uint256(74_7956167113 * 1e11)
+        ];
+        uint256[5] memory liquidityAmounts = [
+            uint256(100_000 * 1e18),
+            uint256(79_400 * 1e18),
+            uint256(68_000 * 1e18),
+            uint256(46_500 * 1e18),
+            uint256(80_700 * 1e18)
+        ];
+        int128[5] memory timeRemainingAmounts = [
+            int128(999),
+            int128(800),
+            int128(500),
+            int128(300),
+            int128(50)
+        ];
+        uint256[5] memory expectedTokensOut = [
+            uint256(149_987),
+            uint256(107_119),
+            uint256(141_665),
+            uint256(68_026),
+            uint256(51_983)
+        ];
 
-        for (uint256 i; i < 1; i++) {
+        for (uint256 i; i < timeRemainingAmounts.length; i++) {
             uint256 result = HourglassMath.tokensOutForCollateralIn(
-                collateralInAmounts[0],
-                tokenXReservesAmounts[0],
-                tokenYReservesAmounts[0],
-                liquidityAmounts[0],
-                timeRemainingAmounts[0],
+                collateralInAmounts[i],
+                tokenXReservesAmounts[i],
+                tokenYReservesAmounts[i],
+                liquidityAmounts[i],
+                timeRemainingAmounts[i],
                 1000
             ) / 1e18;
 
