@@ -333,4 +333,88 @@ contract HourglassMathTest is Test {
             assertEq(result, expectedTokensIn[i]);
         }
     }
+
+    // ================================================================
+    //                    collateralInForTokensOut
+    // ================================================================
+
+    function test_collateralInForTokensOut__reverts() public {
+        // Zero tokenXReserves
+        vm.expectRevert();
+        HourglassMath.collateralInForTokensOut(10, 0, 100, 100, 500, 1000);
+
+        // Zero tokenYReserves
+        vm.expectRevert();
+        HourglassMath.collateralInForTokensOut(10, 100, 0, 100, 500, 1000);
+
+        // Zero liquidity
+        vm.expectRevert();
+        HourglassMath.collateralInForTokensOut(10, 100, 100, 0, 500, 1000);
+
+        // timeRemaining > marketSpan
+        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+        HourglassMath.collateralInForTokensOut(10, 100, 100, 100, 10000, 1000);
+
+        // timeRemaining == marketSpan
+        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+        HourglassMath.collateralInForTokensOut(10, 100, 100, 100, 1000, 1000);
+    }
+
+    // function test_collateralInForTokensOut__baseCases() public {
+    //     uint256[5] memory collateralOutAmounts = [
+    //         uint256(50_000 * 1e18),
+    //         uint256(34_032 * 1e18),
+    //         uint256(62_000 * 1e18),
+    //         uint256(23_000 * 1e18),
+    //         uint256(10_000 * 1e18)
+    //     ];
+    //     uint256[5] memory tokenXReservesAmounts = [
+    //         uint256(100_000 * 1e18),
+    //         uint256(59_600 * 1e18),
+    //         uint256(87_000 * 1e18),
+    //         uint256(69_600 * 1e18),
+    //         uint256(73_000 * 1e18)
+    //     ];
+    //     uint256[5] memory tokenYReservesAmounts = [
+    //         uint256(100_000 * 1e18),
+    //         uint256(79_0356867653 * 1e11),
+    //         uint256(98_2864736675 * 1e11),
+    //         uint256(91_0080760435 * 1e11),
+    //         uint256(69_2238627315 * 1e11)
+    //     ];
+    //     uint256[5] memory liquidityAmounts = [
+    //         uint256(100_000 * 1e18),
+    //         uint256(68_500 * 1e18),
+    //         uint256(92_400 * 1e18),
+    //         uint256(79_000 * 1e18),
+    //         uint256(71_000 * 1e18)
+    //     ];
+    //     int128[5] memory timeRemainingAmounts = [
+    //         int128(999),
+    //         int128(700),
+    //         int128(500),
+    //         int128(300),
+    //         int128(50)
+    //     ];
+    //     uint256[5] memory expectedTokensIn = [
+    //         uint256(150_048),
+    //         uint256(82_685),
+    //         uint256(408_372),
+    //         uint256(47_133),
+    //         uint256(66_838)
+    //     ];
+
+    //     for (uint256 i; i < timeRemainingAmounts.length; i++) {
+    //         uint256 result = HourglassMath.collateralInForTokensOut(
+    //             collateralOutAmounts[i],
+    //             tokenXReservesAmounts[i],
+    //             tokenYReservesAmounts[i],
+    //             liquidityAmounts[i],
+    //             timeRemainingAmounts[i],
+    //             1000
+    //         ) / 1e18;
+
+    //         assertEq(result, expectedTokensIn[i]);
+    //     }
+    // }
 }
