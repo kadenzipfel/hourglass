@@ -185,11 +185,11 @@ contract HourglassMathTest is Test {
 
         // timeRemaining > marketSpan
         vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 100);
+        HourglassMath.tokensOutForCollateralIn(10, 100, 100, 100, 10000, 1000);
 
         // timeRemaining == marketSpan
         vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 1000);
+        HourglassMath.tokensOutForCollateralIn(10, 100, 100, 100, 1000, 1000);
     }
 
     function test_tokensOutForCollateralIn__baseCases() public {
