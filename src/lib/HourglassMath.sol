@@ -137,7 +137,7 @@ library HourglassMath {
         uint256 maxTokenXReserves = tokenXReservesAtTokenYReserves(tokenYReserves, liquidity, timeRemaining, marketSpan);
 
         // Return token X delta
-        return tokenXReserves - maxTokenXReserves;
+        return maxTokenXReserves - tokenXReserves;
     }
 
     /// @notice Calculates the amount of collateral required for given amount of token X out
