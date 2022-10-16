@@ -6,7 +6,7 @@ import {Exp64x64} from "../src/lib/Exp64x64.sol";
 import {Math64x64} from "../src/lib/Math64x64.sol";
 import {HourglassMath} from "../src/lib/HourglassMath.sol";
 
-// Desmos: https://www.desmos.com/calculator/uqdttqegtp
+// Desmos: https://www.desmos.com/calculator/sbptupjc98
 
 contract HourglassMathTest is Test {
     using Math64x64 for int128;
