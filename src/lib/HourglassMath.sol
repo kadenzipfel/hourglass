@@ -53,7 +53,7 @@ library HourglassMath {
     /// @notice Calculates amount of collateral liquidity given reserves of token x and y
     /// @param tokenXReserves reserves of token X
     /// @param tokenYReserves reserves of token Y
-    /// @param timeRemaining time remaining until market maturity (in seconds) 
+    /// @param timeRemaining time remaining until market maturity (in seconds)
     /// @param tokenXReserves total market open time span (in seconds)
     /// @return liquidity amount of collateral liquidity at given token reserves
     function liquidityAtTokenReserves(
@@ -105,11 +105,10 @@ library HourglassMath {
         // Increase amounts by collateral in
         tokenXReserves += collateralIn;
         tokenYReserves += collateralIn;
-        liquidity += collateralIn;
 
         // Calculate minimum token X reserves
         uint256 minTokenXReserves = tokenXReservesAtTokenYReserves(tokenYReserves, liquidity, timeRemaining, marketSpan);
-        
+
         // Return token X delta
         return tokenXReserves - minTokenXReserves;
     }
@@ -133,11 +132,10 @@ library HourglassMath {
         // Decrease amounts by collateral out
         tokenXReserves -= collateralOut;
         tokenYReserves -= collateralOut;
-        liquidity -= collateralOut;
 
         // Calculate maximum token X reserves
         uint256 maxTokenXReserves = tokenXReservesAtTokenYReserves(tokenYReserves, liquidity, timeRemaining, marketSpan);
-        
+
         // Return token X delta
         return tokenXReserves - maxTokenXReserves;
     }

@@ -93,12 +93,11 @@ contract HourglassMathTest is Test {
         }
     }
 
-    function test_tokenXReservesAtTokenYReserves__mirror(uint256 tokenYReserves)
-        public
-    {
+    function test_tokenXReservesAtTokenYReserves__mirror(uint256 tokenYReserves) public {
         vm.assume(tokenYReserves < 1_000_000_000 * 1e18 && tokenYReserves > 1 * 1e18);
 
-        uint128 tokenXReserves = HourglassMath.tokenXReservesAtTokenYReserves(tokenYReserves, 1_000_000 * 1e18, 999, 1000);
+        uint128 tokenXReserves =
+            HourglassMath.tokenXReservesAtTokenYReserves(tokenYReserves, 1_000_000 * 1e18, 999, 1000);
         uint128 tokenYReservesMirror =
             HourglassMath.tokenXReservesAtTokenYReserves(tokenXReserves, 1_000_000 * 1e18, 999, 1000);
 
@@ -161,7 +160,8 @@ contract HourglassMathTest is Test {
         vm.assume(tokenYReserves < 1_000_000_000 * 1e18 && tokenYReserves > 1 * 1e18);
 
         uint128 liquidity = HourglassMath.liquidityAtTokenReserves(tokenXReserves, tokenYReserves, 500, 1000);
-        uint128 tokenXReservesMirror = HourglassMath.tokenXReservesAtTokenYReserves(tokenYReserves, liquidity, 500, 1000);
+        uint128 tokenXReservesMirror =
+            HourglassMath.tokenXReservesAtTokenYReserves(tokenYReserves, liquidity, 500, 1000);
 
         assertApproxEqAbs(tokenXReserves / 1e18, tokenXReservesMirror / 1e18, 1);
     }
@@ -172,15 +172,15 @@ contract HourglassMathTest is Test {
 
     function test_tokensOutForCollateralIn__reverts() public {
         // Zero tokenXReserves
-        vm.expectRevert();        
+        vm.expectRevert();
         HourglassMath.tokensOutForCollateralIn(10, 0, 100, 100, 500, 1000);
 
         // Zero tokenYReserves
-        vm.expectRevert();        
+        vm.expectRevert();
         HourglassMath.tokensOutForCollateralIn(10, 100, 0, 100, 500, 1000);
 
         // Zero liquidity
-        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));        
+        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
         HourglassMath.tokensOutForCollateralIn(10, 100, 100, 0, 500, 1000);
 
         // timeRemaining > marketSpan
@@ -190,5 +190,27 @@ contract HourglassMathTest is Test {
         // timeRemaining == marketSpan
         vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
         HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 1000);
+    }
+
+    function test_tokensOutForCollateralIn__baseCases() public {
+        uint256[1] memory collateralInAmounts = [uint256(100_000 * 1e18)];
+        uint256[1] memory tokenXReservesAmounts = [uint256(100_000 * 1e18)];
+        uint256[1] memory tokenYReservesAmounts = [uint256(100_000 * 1e18)];
+        uint256[1] memory liquidityAmounts = [uint256(100_000 * 1e18)];
+        int128[1] memory timeRemainingAmounts = [int128(999)];
+        uint256[1] memory expectedTokensOut = [uint256(149987)];
+
+        for (uint256 i; i < 1; i++) {
+            uint256 result = HourglassMath.tokensOutForCollateralIn(
+                collateralInAmounts[0],
+                tokenXReservesAmounts[0],
+                tokenYReservesAmounts[0],
+                liquidityAmounts[0],
+                timeRemainingAmounts[0],
+                1000
+            ) / 1e18;
+
+            assertEq(result, expectedTokensOut[i]);
+        }
     }
 }
