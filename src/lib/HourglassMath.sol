@@ -156,14 +156,16 @@ library HourglassMath {
         int128 timeRemaining,
         int128 marketSpan
     ) public pure returns (uint256) {
-        // Decrease token X reserves by tokenXOut
-        tokenXReserves -= tokenXOut;
+        if (liquidity == 0) revert ZeroValue();
 
-        // Calculate liquidity with reduced token X reserves
-        uint256 reducedLiquidity = liquidityAtTokenReserves(tokenXReserves, tokenYReserves, timeRemaining, marketSpan);
+        // Increase token X reserves by tokenXOut
+        tokenXReserves += tokenXOut;
+
+        // Calculate liquidity with increased token X reserves
+        uint256 increasedLiquidity = liquidityAtTokenReserves(tokenXReserves, tokenYReserves, timeRemaining, marketSpan);
 
         // Return liquidity delta
-        return liquidity - reducedLiquidity;
+        return increasedLiquidity - liquidity;
     }
 
     /// @notice Calculates the amount of collateral to receive for given amount of token X in
