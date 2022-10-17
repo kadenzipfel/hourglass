@@ -361,23 +361,47 @@ contract HourglassMathTest is Test {
     }
 
     function test_collateralInForTokensOut__baseCases() public {
-        uint256[1] memory tokenXOutAmounts = [
-            uint256(70_300 * 1e18)
+        uint256[5] memory tokenXOutAmounts = [
+            uint256(70_300 * 1e18),
+            uint256(82_600 * 1e18),
+            uint256(107_900 * 1e18),
+            uint256(87_900 * 1e18),
+            uint256(135_100 * 1e18)
         ];
-        uint256[1] memory tokenXReservesAmounts = [
-            uint256(35_500 * 1e18)
+        uint256[5] memory tokenXReservesAmounts = [
+            uint256(35_500 * 1e18),
+            uint256(64_200 * 1e18),
+            uint256(37_000 * 1e18),
+            uint256(57_000 * 1e18),
+            uint256(34_300 * 1e18)
         ];
-        uint256[1] memory tokenYReservesAmounts = [
-            uint256(132_452740419 * 1e12)
+        uint256[5] memory tokenYReservesAmounts = [
+            uint256(132_452740419 * 1e12),
+            uint256(72_2080495998 * 1e11),
+            uint256(153_92226639 * 1e13),
+            uint256(279_227972063 * 1e12),
+            uint256(84_6688223772 * 1e11)
         ];
-        uint256[1] memory liquidityAmounts = [
-            uint256(68_1867185751 * 1e11)
+        uint256[5] memory liquidityAmounts = [
+            uint256(68_1867185751 * 1e11),
+            uint256(68_0725129254 * 1e11),
+            uint256(68_0307284408 * 1e11),
+            uint256(98_8620432618 * 1e11),
+            uint256(41_3694393564 * 1e11)
         ];
-        int128[1] memory timeRemainingAmounts = [
-            int128(950)
+        int128[5] memory timeRemainingAmounts = [
+            int128(950),
+            int128(800),
+            int128(500),
+            int128(300),
+            int128(50)
         ];
-        uint256[1] memory expectedCollateralIn = [
-            uint256(50_172)
+        uint256[5] memory expectedCollateralIn = [
+            uint256(50_172),
+            uint256(34_122),
+            uint256(81_284),
+            uint256(93_648),
+            uint256(59_473)
         ];
 
         for (uint256 i; i < timeRemainingAmounts.length; i++) {
