@@ -182,6 +182,8 @@ library HourglassMath {
         int128 timeRemaining,
         int128 marketSpan
     ) public pure returns (uint256) {
+        if (liquidity == 0) revert ZeroValue();
+
         // Increase token X reserves by tokenXIn
         tokenXReserves += tokenXIn;
 
