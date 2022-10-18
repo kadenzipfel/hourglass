@@ -4,9 +4,6 @@ pragma solidity 0.8.15;
 import {Exp64x64} from "./Exp64x64.sol";
 import {Math64x64} from "./Math64x64.sol";
 
-error ZeroValue();
-error InvalidTime();
-
 /// @dev Math library for Hourglass logic
 /// @author https://github.com/kadenzipfel
 library HourglassMath {
@@ -31,9 +28,6 @@ library HourglassMath {
         int128 timeRemaining,
         int128 marketSpan
     ) public pure returns (uint128) {
-        if (tokenYReserves == 0 || liquidity == 0) revert ZeroValue();
-        if (timeRemaining >= marketSpan) revert InvalidTime();
-
         // 1 - 1/√tₘ
         int128 z = _calculateZ(_calculateTm(timeRemaining, marketSpan));
 
@@ -62,9 +56,6 @@ library HourglassMath {
         int128 timeRemaining,
         int128 marketSpan
     ) public pure returns (uint128) {
-        if (tokenXReserves == 0 || tokenYReserves == 0) revert ZeroValue();
-        if (timeRemaining >= marketSpan) revert InvalidTime();
-
         // 1 - 1/√tₘ
         int128 z = _calculateZ(_calculateTm(timeRemaining, marketSpan));
 
@@ -100,8 +91,6 @@ library HourglassMath {
         int128 timeRemaining,
         int128 marketSpan
     ) public pure returns (uint256) {
-        if (liquidity == 0) revert ZeroValue();
-
         // Increase amounts by collateral in
         tokenXReserves += collateralIn;
         tokenYReserves += collateralIn;
@@ -155,8 +144,6 @@ library HourglassMath {
         int128 timeRemaining,
         int128 marketSpan
     ) public pure returns (uint256) {
-        if (liquidity == 0) revert ZeroValue();
-
         // Increase token X reserves by tokenXOut
         tokenXReserves += tokenXOut;
 
@@ -183,8 +170,6 @@ library HourglassMath {
         int128 timeRemaining,
         int128 marketSpan
     ) public pure returns (uint256) {
-        if (liquidity == 0) revert ZeroValue();
-
         // Increase token X reserves by tokenXIn
         tokenXReserves += tokenXIn;
 

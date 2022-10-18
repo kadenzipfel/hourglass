@@ -46,23 +46,23 @@ contract HourglassMathTest is Test {
     //                 tokenXReservesAtTokenYReserves
     // ================================================================
 
-    function test_tokenXReservesAtTokenYReserves__reverts() public {
-        // Zero tokenYReserves
-        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
-        HourglassMath.tokenXReservesAtTokenYReserves(0, 10_000, 100, 1000);
+    // function test_tokenXReservesAtTokenYReserves__reverts() public {
+    //     // Zero tokenYReserves
+    //     vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
+    //     HourglassMath.tokenXReservesAtTokenYReserves(0, 10_000, 100, 1000);
 
-        // Zero liquidity
-        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
-        HourglassMath.tokenXReservesAtTokenYReserves(100, 0, 100, 1000);
+    //     // Zero liquidity
+    //     vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
+    //     HourglassMath.tokenXReservesAtTokenYReserves(100, 0, 100, 1000);
 
-        // timeRemaining > marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 100);
+    //     // timeRemaining > marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 100);
 
-        // timeRemaining == marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 1000);
-    }
+    //     // timeRemaining == marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 1000);
+    // }
 
     function test_tokenXReservesAtTokenYReserves__baseCases() public {
         uint128[5] memory tokenYReservesAmounts = [
@@ -108,23 +108,23 @@ contract HourglassMathTest is Test {
     //                     liquidityAtTokenReserves
     // ================================================================
 
-    function test_liquidityAtTokenReserves__reverts() public {
-        // Zero tokenXReserves
-        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
-        HourglassMath.liquidityAtTokenReserves(0, 10_000, 100, 1000);
+    // function test_liquidityAtTokenReserves__reverts() public {
+    //     // Zero tokenXReserves
+    //     vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
+    //     HourglassMath.liquidityAtTokenReserves(0, 10_000, 100, 1000);
 
-        // Zero tokenYReserves
-        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
-        HourglassMath.liquidityAtTokenReserves(100, 0, 100, 1000);
+    //     // Zero tokenYReserves
+    //     vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
+    //     HourglassMath.liquidityAtTokenReserves(100, 0, 100, 1000);
 
-        // timeRemaining > marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 100);
+    //     // timeRemaining > marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 100);
 
-        // timeRemaining == marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 1000);
-    }
+    //     // timeRemaining == marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.liquidityAtTokenReserves(100, 1000, 1000, 1000);
+    // }
 
     function test_liquidityAtTokenReserves__baseCases() public {
         uint128[5] memory tokenXReservesAmounts = [
@@ -170,27 +170,27 @@ contract HourglassMathTest is Test {
     //                    tokensOutForCollateralIn
     // ================================================================
 
-    function test_tokensOutForCollateralIn__reverts() public {
-        // Zero tokenXReserves
-        vm.expectRevert();
-        HourglassMath.tokensOutForCollateralIn(10, 0, 100, 100, 500, 1000);
+    // function test_tokensOutForCollateralIn__reverts() public {
+    //     // Zero tokenXReserves
+    //     vm.expectRevert();
+    //     HourglassMath.tokensOutForCollateralIn(10, 0, 100, 100, 500, 1000);
 
-        // Zero tokenYReserves
-        vm.expectRevert();
-        HourglassMath.tokensOutForCollateralIn(10, 100, 0, 100, 500, 1000);
+    //     // Zero tokenYReserves
+    //     vm.expectRevert();
+    //     HourglassMath.tokensOutForCollateralIn(10, 100, 0, 100, 500, 1000);
 
-        // Zero liquidity
-        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
-        HourglassMath.tokensOutForCollateralIn(10, 100, 100, 0, 500, 1000);
+    //     // Zero liquidity
+    //     vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
+    //     HourglassMath.tokensOutForCollateralIn(10, 100, 100, 0, 500, 1000);
 
-        // timeRemaining > marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.tokensOutForCollateralIn(10, 100, 100, 100, 10000, 1000);
+    //     // timeRemaining > marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.tokensOutForCollateralIn(10, 100, 100, 100, 10000, 1000);
 
-        // timeRemaining == marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.tokensOutForCollateralIn(10, 100, 100, 100, 1000, 1000);
-    }
+    //     // timeRemaining == marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.tokensOutForCollateralIn(10, 100, 100, 100, 1000, 1000);
+    // }
 
     function test_tokensOutForCollateralIn__baseCases() public {
         uint256[5] memory collateralInAmounts = [
@@ -254,27 +254,27 @@ contract HourglassMathTest is Test {
     //                    tokensInForCollateralOut
     // ================================================================
 
-    function test_tokensInForCollateralOut__reverts() public {
-        // Zero tokenXReserves
-        vm.expectRevert();
-        HourglassMath.tokensInForCollateralOut(10, 0, 100, 100, 500, 1000);
+    // function test_tokensInForCollateralOut__reverts() public {
+    //     // Zero tokenXReserves
+    //     vm.expectRevert();
+    //     HourglassMath.tokensInForCollateralOut(10, 0, 100, 100, 500, 1000);
 
-        // Zero tokenYReserves
-        vm.expectRevert();
-        HourglassMath.tokensInForCollateralOut(10, 100, 0, 100, 500, 1000);
+    //     // Zero tokenYReserves
+    //     vm.expectRevert();
+    //     HourglassMath.tokensInForCollateralOut(10, 100, 0, 100, 500, 1000);
 
-        // Zero liquidity
-        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
-        HourglassMath.tokensInForCollateralOut(10, 100, 100, 0, 500, 1000);
+    //     // Zero liquidity
+    //     vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
+    //     HourglassMath.tokensInForCollateralOut(10, 100, 100, 0, 500, 1000);
 
-        // timeRemaining > marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.tokensInForCollateralOut(10, 100, 100, 100, 10000, 1000);
+    //     // timeRemaining > marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.tokensInForCollateralOut(10, 100, 100, 100, 10000, 1000);
 
-        // timeRemaining == marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.tokensInForCollateralOut(10, 100, 100, 100, 1000, 1000);
-    }
+    //     // timeRemaining == marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.tokensInForCollateralOut(10, 100, 100, 100, 1000, 1000);
+    // }
 
     function test_tokensInForCollateralOut__baseCases() public {
         uint256[5] memory collateralOutAmounts = [
@@ -338,27 +338,27 @@ contract HourglassMathTest is Test {
     //                    collateralInForTokensOut
     // ================================================================
 
-    function test_collateralInForTokensOut__reverts() public {
-        // Zero tokenXReserves
-        vm.expectRevert();
-        HourglassMath.collateralInForTokensOut(10, 0, 100, 100, 500, 1000);
+    // function test_collateralInForTokensOut__reverts() public {
+    //     // Zero tokenXReserves
+    //     vm.expectRevert();
+    //     HourglassMath.collateralInForTokensOut(10, 0, 100, 100, 500, 1000);
 
-        // Zero tokenYReserves
-        vm.expectRevert();
-        HourglassMath.collateralInForTokensOut(10, 100, 0, 100, 500, 1000);
+    //     // Zero tokenYReserves
+    //     vm.expectRevert();
+    //     HourglassMath.collateralInForTokensOut(10, 100, 0, 100, 500, 1000);
 
-        // Zero liquidity
-        vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
-        HourglassMath.collateralInForTokensOut(10, 100, 100, 0, 500, 1000);
+    //     // Zero liquidity
+    //     vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
+    //     HourglassMath.collateralInForTokensOut(10, 100, 100, 0, 500, 1000);
 
-        // timeRemaining > marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.collateralInForTokensOut(10, 100, 100, 100, 10000, 1000);
+    //     // timeRemaining > marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.collateralInForTokensOut(10, 100, 100, 100, 10000, 1000);
 
-        // timeRemaining == marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.collateralInForTokensOut(10, 100, 100, 100, 1000, 1000);
-    }
+    //     // timeRemaining == marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.collateralInForTokensOut(10, 100, 100, 100, 1000, 1000);
+    // }
 
     function test_collateralInForTokensOut__baseCases() public {
         uint256[5] memory tokenXOutAmounts = [
@@ -422,27 +422,27 @@ contract HourglassMathTest is Test {
     //                    collateralOutForTokensIn
     // ================================================================
 
-    function test_collateralOutForTokensIn__reverts() public {
-        // Zero tokenXReserves
-        vm.expectRevert();
-        HourglassMath.collateralOutForTokensIn(10, 0, 100, 100, 500, 1000);
+    // function test_collateralOutForTokensIn__reverts() public {
+    //     // Zero tokenXReserves
+    //     vm.expectRevert();
+    //     HourglassMath.collateralOutForTokensIn(10, 0, 100, 100, 500, 1000);
 
-        // Zero tokenYReserves
-        vm.expectRevert();
-        HourglassMath.collateralOutForTokensIn(10, 100, 0, 100, 500, 1000);
+    //     // Zero tokenYReserves
+    //     vm.expectRevert();
+    //     HourglassMath.collateralOutForTokensIn(10, 100, 0, 100, 500, 1000);
 
-        // Zero liquidity
-        vm.expectRevert();
-        HourglassMath.collateralOutForTokensIn(10, 100, 100, 0, 500, 1000);
+    //     // Zero liquidity
+    //     vm.expectRevert();
+    //     HourglassMath.collateralOutForTokensIn(10, 100, 100, 0, 500, 1000);
 
-        // timeRemaining > marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.collateralOutForTokensIn(10, 100, 100, 100, 10000, 1000);
+    //     // timeRemaining > marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.collateralOutForTokensIn(10, 100, 100, 100, 10000, 1000);
 
-        // timeRemaining == marketSpan
-        vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
-        HourglassMath.collateralOutForTokensIn(10, 100, 100, 100, 1000, 1000);
-    }
+    //     // timeRemaining == marketSpan
+    //     vm.expectRevert(abi.encodeWithSignature("InvalidTime()"));
+    //     HourglassMath.collateralOutForTokensIn(10, 100, 100, 100, 1000, 1000);
+    // }
 
     function test_collateralOutForTokensIn__baseCases() public {
         uint256[5] memory tokenXInAmounts = [
