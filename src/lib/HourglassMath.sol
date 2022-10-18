@@ -129,15 +129,14 @@ library HourglassMath {
         int128 timeRemaining,
         int128 marketSpan
     ) public pure returns (uint256) {
-        // Decrease amounts by collateral out
-        tokenXReserves -= collateralOut;
+        // Get ending token Y reserves
         tokenYReserves -= collateralOut;
 
-        // Calculate maximum token X reserves
-        uint256 maxTokenXReserves = tokenXReservesAtTokenYReserves(tokenYReserves, liquidity, timeRemaining, marketSpan);
+        // Get ending token X reserves
+        uint256 tokenXEndReserves = tokenXReservesAtTokenYReserves(tokenYReserves, liquidity, timeRemaining, marketSpan);
 
-        // Return token X delta
-        return maxTokenXReserves - tokenXReserves;
+        // Get delta between starting token X reserves and reserves before collateral is removed
+        return tokenXEndReserves + collateralOut - tokenXReserves;
     }
 
     /// @notice Calculates the amount of collateral required for given amount of token X out
