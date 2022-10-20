@@ -85,13 +85,14 @@ contract HourglassMathTest is Test {
         }
     }
 
-    function testTokenXReservesAtTokenYReservesMirror(uint256 tokenYReserves) public {
-        vm.assume(tokenYReserves < 2**64 && tokenYReserves > 1 * 1e12);
+    function testTokenXReservesAtTokenYReservesMirror(uint64 tokenYReserves, uint64 liquidity) public {
+        vm.assume(tokenYReserves > 1 * 1e12);
+        vm.assume(liquidity > 1 * 1e12);
 
         uint128 tokenXReserves =
-            HourglassMath.tokenXReservesAtTokenYReserves(tokenYReserves, 1_000_000 * 1e18, 999, 1000);
+            HourglassMath.tokenXReservesAtTokenYReserves(tokenYReserves, liquidity, 999, 1000);
         uint128 tokenYReservesMirror =
-            HourglassMath.tokenXReservesAtTokenYReserves(tokenXReserves, 1_000_000 * 1e18, 999, 1000);
+            HourglassMath.tokenXReservesAtTokenYReserves(tokenXReserves, liquidity, 999, 1000);
 
         assertApproxEqAbs(tokenYReserves / 1e18, tokenYReservesMirror / 1e18, 1);
     }
