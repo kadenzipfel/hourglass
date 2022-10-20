@@ -44,37 +44,6 @@ library HourglassMath {
         return uint128(ly.pow(int128(ONE).div(int128(z))));
     }
 
-    /// @notice Calculates amount of collateral liquidity given reserves of token x and y
-    /// @param tokenXReserves reserves of token X
-    /// @param tokenYReserves reserves of token Y
-    /// @param timeRemaining time remaining until market maturity (in seconds)
-    /// @param tokenXReserves total market open time span (in seconds)
-    /// @return liquidity amount of collateral liquidity at given token reserves
-    function liquidityAtTokenReserves(
-        uint256 tokenXReserves,
-        uint256 tokenYReserves,
-        int128 timeRemaining,
-        int128 marketSpan
-    ) public pure returns (uint128) {
-        // 1 - 1/√tₘ
-        int128 z = _calculateZ(_calculateTm(timeRemaining, marketSpan));
-
-        // x^(1 - 1/√tₘ)
-        int128 x = tokenXReserves.divu(uint256(ONE)).pow(z);
-
-        // y^(1 - 1/√tₘ)
-        int128 y = tokenYReserves.divu(uint256(ONE)).pow(z);
-
-        // x^(1 - 1/√tₘ) + y^(1 - 1/√tₘ)
-        int128 xy = x.add(y);
-
-        // 2^(-1/(1-1/√tₘ))
-        int128 t = int128(2 * ONE).pow((-1 * int128(ONE)).div(int128(z)));
-
-        // 2^(-1/(1-1/√tₘ))((1 - 1/√tₘ)√(x^(1 - 1/√tₘ) + y^(1 - 1/√tₘ)))
-        return uint128(t.mul(xy.pow(int128(ONE).div(int128(z)))));
-    }
-
     /// @notice Calculates amount of tokens returned given amount of collateral deposited
     /// @param collateralIn amount of collateral being deposited
     /// @param tokenXReserves reserves of token X
@@ -126,58 +95,6 @@ library HourglassMath {
 
         // Get delta between starting token X reserves and reserves before collateral is removed
         return tokenXEndReserves + collateralOut - tokenXReserves;
-    }
-
-    /// @notice Calculates the amount of collateral required for given amount of token X out
-    /// @param tokenXOut amount of token
-    /// @param tokenXReserves reserves of token X
-    /// @param tokenYReserves reserves of token Y
-    /// @param liquidity amount of liquidity in pool
-    /// @param timeRemaining time remaining until market maturity (in seconds)
-    /// @param marketSpan total market open time span (in seconds)
-    /// @return collateralIn amount of collateral required for tokenXOut
-    function collateralInForTokensOut(
-        uint256 tokenXOut,
-        uint256 tokenXReserves,
-        uint256 tokenYReserves,
-        uint256 liquidity,
-        int128 timeRemaining,
-        int128 marketSpan
-    ) public pure returns (uint256) {
-        // Increase token X reserves by tokenXOut
-        tokenXReserves += tokenXOut;
-
-        // Calculate liquidity with increased token X reserves
-        uint256 increasedLiquidity = liquidityAtTokenReserves(tokenXReserves, tokenYReserves, timeRemaining, marketSpan);
-
-        // Return liquidity delta
-        return increasedLiquidity - liquidity;
-    }
-
-    /// @notice Calculates the amount of collateral to receive for given amount of token X in
-    /// @param tokenXIn amount of token
-    /// @param tokenXReserves reserves of token X
-    /// @param tokenYReserves reserves of token Y
-    /// @param liquidity amount of liquidity in pool
-    /// @param timeRemaining time remaining until market maturity (in seconds)
-    /// @param marketSpan total market open time span (in seconds)
-    /// @return collateralOut amount of collateral received for tokenXIn
-    function collateralOutForTokensIn(
-        uint256 tokenXIn,
-        uint256 tokenXReserves,
-        uint256 tokenYReserves,
-        uint256 liquidity,
-        int128 timeRemaining,
-        int128 marketSpan
-    ) public pure returns (uint256) {
-        // Increase token X reserves by tokenXIn
-        tokenXReserves += tokenXIn;
-
-        // Calculate liquidity with increased token X reserves
-        uint256 increasedLiquidity = liquidityAtTokenReserves(tokenXReserves, tokenYReserves, timeRemaining, marketSpan);
-
-        // Return liquidity delta
-        return increasedLiquidity - liquidity;
     }
 
     /// @dev Calculate time to maturity fraction (tₘ)
