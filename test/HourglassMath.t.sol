@@ -79,8 +79,8 @@ contract HourglassMathTest is Test {
             uint128(140_330 * 1e18),
             uint128(1340 * 1e18)
         ];
-        int128[5] memory timeRemainingAmounts = [int128(999), int128(750), int128(500), int128(250), int128(50)];
-        int128[5] memory marketSpanAmounts = [int128(1000), int128(1000), int128(1000), int128(1000), int128(1000)];
+        uint128[5] memory timeRemainingAmounts = [uint128(999), uint128(750), uint128(500), uint128(250), uint128(50)];
+        uint128[5] memory marketSpanAmounts = [uint128(1000), uint128(1000), uint128(1000), uint128(1000), uint128(1000)];
         uint128[5] memory expectedTokenXReserves =
             [uint128(100_000), uint128(3_866_584), uint128(26_168), uint128(265_861), uint128(1098)];
 
@@ -159,12 +159,12 @@ contract HourglassMathTest is Test {
             uint256(46_500 * 1e18),
             uint256(80_700 * 1e18)
         ];
-        int128[5] memory timeRemainingAmounts = [
-            int128(999),
-            int128(800),
-            int128(500),
-            int128(300),
-            int128(50)
+        uint128[5] memory timeRemainingAmounts = [
+            uint128(999),
+            uint128(800),
+            uint128(500),
+            uint128(300),
+            uint128(50)
         ];
         uint256[5] memory expectedTokensOut = [
             uint256(149_987),
@@ -243,12 +243,12 @@ contract HourglassMathTest is Test {
             uint256(79_000 * 1e18),
             uint256(71_000 * 1e18)
         ];
-        int128[5] memory timeRemainingAmounts = [
-            int128(999),
-            int128(700),
-            int128(500),
-            int128(300),
-            int128(50)
+        uint128[5] memory timeRemainingAmounts = [
+            uint128(999),
+            uint128(700),
+            uint128(500),
+            uint128(300),
+            uint128(50)
         ];
         uint256[5] memory expectedTokensIn = [
             uint256(150_048),

@@ -25,11 +25,11 @@ library HourglassMath {
     function tokenXReservesAtTokenYReserves(
         uint256 tokenYReserves,
         uint256 liquidity,
-        int128 timeRemaining,
-        int128 marketSpan
+        uint128 timeRemaining,
+        uint128 marketSpan
     ) public pure returns (uint128) {
         // 1 - 1/√tₘ
-        int128 z = _calculateZ(_calculateTm(timeRemaining, marketSpan));
+        int128 z = _calculateZ(_calculateTm(int128(timeRemaining), int128(marketSpan)));
 
         // 2L^(1 - 1/√tₘ)
         int128 l = int128(2 * ONE).mul(liquidity.divu(uint256(ONE)).pow(z));
@@ -57,8 +57,8 @@ library HourglassMath {
         uint256 tokenXReserves,
         uint256 tokenYReserves,
         uint256 liquidity,
-        int128 timeRemaining,
-        int128 marketSpan
+        uint128 timeRemaining,
+        uint128 marketSpan
     ) public pure returns (uint256) {
         // Increase amounts by collateral in
         tokenXReserves += collateralIn;
@@ -84,8 +84,8 @@ library HourglassMath {
         uint256 tokenXReserves,
         uint256 tokenYReserves,
         uint256 liquidity,
-        int128 timeRemaining,
-        int128 marketSpan
+        uint128 timeRemaining,
+        uint128 marketSpan
     ) public pure returns (uint256) {
         // Get ending token Y reserves
         tokenYReserves -= collateralOut;
