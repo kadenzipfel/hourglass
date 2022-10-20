@@ -46,7 +46,7 @@ contract HourglassMathTest is Test {
     //                 tokenXReservesAtTokenYReserves
     // ================================================================
 
-    // function test_tokenXReservesAtTokenYReserves__reverts() public {
+    // function testTokenXReservesAtTokenYReservesReverts() public {
     //     // Zero tokenYReserves
     //     vm.expectRevert(abi.encodeWithSignature("ZeroValue()"));
     //     HourglassMath.tokenXReservesAtTokenYReserves(0, 10_000, 100, 1000);
@@ -64,7 +64,7 @@ contract HourglassMathTest is Test {
     //     HourglassMath.tokenXReservesAtTokenYReserves(100, 1000, 1000, 1000);
     // }
 
-    function test_tokenXReservesAtTokenYReserves__baseCases() public {
+    function testTokenXReservesAtTokenYReservesBaseCases() public {
         uint128[5] memory tokenYReservesAmounts = [
             uint128(100_000 * 1e18),
             uint128(8032 * 1e18),
@@ -93,7 +93,7 @@ contract HourglassMathTest is Test {
         }
     }
 
-    function test_tokenXReservesAtTokenYReserves__mirror(uint256 tokenYReserves) public {
+    function testTokenXReservesAtTokenYReservesRirror(uint256 tokenYReserves) public {
         vm.assume(tokenYReserves < 1_000_000_000 * 1e18 && tokenYReserves > 1 * 1e18);
 
         uint128 tokenXReserves =
@@ -108,7 +108,7 @@ contract HourglassMathTest is Test {
     //                    tokensOutForCollateralIn
     // ================================================================
 
-    // function test_tokensOutForCollateralIn__reverts() public {
+    // function testTokensOutForCollateralInReverts() public {
     //     // Zero tokenXReserves
     //     vm.expectRevert();
     //     HourglassMath.tokensOutForCollateralIn(10, 0, 100, 100, 500, 1000);
@@ -130,7 +130,7 @@ contract HourglassMathTest is Test {
     //     HourglassMath.tokensOutForCollateralIn(10, 100, 100, 100, 1000, 1000);
     // }
 
-    function test_tokensOutForCollateralIn__baseCases() public {
+    function testTokensOutForCollateralInBaseCases() public {
         uint256[5] memory collateralInAmounts = [
             uint256(100_000 * 1e18),
             uint256(81_400 * 1e18),
@@ -192,7 +192,7 @@ contract HourglassMathTest is Test {
     //                    tokensInForCollateralOut
     // ================================================================
 
-    // function test_tokensInForCollateralOut__reverts() public {
+    // function testTokensInForCollateralOutReverts() public {
     //     // Zero tokenXReserves
     //     vm.expectRevert();
     //     HourglassMath.tokensInForCollateralOut(10, 0, 100, 100, 500, 1000);
@@ -214,7 +214,7 @@ contract HourglassMathTest is Test {
     //     HourglassMath.tokensInForCollateralOut(10, 100, 100, 100, 1000, 1000);
     // }
 
-    function test_tokensInForCollateralOut__baseCases() public {
+    function testTokensInForCollateralOutBaseCases() public {
         uint256[5] memory collateralOutAmounts = [
             uint256(50_000 * 1e18),
             uint256(34_032 * 1e18),
