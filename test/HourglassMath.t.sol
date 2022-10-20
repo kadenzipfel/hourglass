@@ -86,7 +86,7 @@ contract HourglassMathTest is Test {
     }
 
     function testTokenXReservesAtTokenYReservesMirror(uint256 tokenYReserves) public {
-        vm.assume(tokenYReserves < 1_000_000_000 * 1e18 && tokenYReserves > 1 * 1e18);
+        vm.assume(tokenYReserves < 2**64 && tokenYReserves > 1 * 1e12);
 
         uint128 tokenXReserves =
             HourglassMath.tokenXReservesAtTokenYReserves(tokenYReserves, 1_000_000 * 1e18, 999, 1000);
